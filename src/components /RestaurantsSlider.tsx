@@ -1,85 +1,111 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { AppBaseUrl, Restaurants } from "../api";
+import { useHistory } from "react-router-dom";
+
+interface props {
+  rests: Restaurants[];
+}
 
 const settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 2,
+  slidesToShow: 1,
   slidesToScroll: 1,
 };
 
-function RestaurantsSlider() {
+const RestaurantsSliderChef: React.FC<props> = ({ rests }) => {
+  const history = useHistory();
+
+  const onRestClicked = (id: string) => {
+    history.push("/restaurant" + "/?id=" + id);
+  };
+
+  useEffect(() => {}, []);
   return (
     <SliderContainer>
-      <SliderHeader>Yossi's restaurants :</SliderHeader>
+      <SliderHeader>THE POPULAR RESTAURANTS IN EPICURE:</SliderHeader>
       <Slider {...settings}>
-        <RestaurantContainer>
-          <RestaurantImage src="assets/rest/claro.png" />
-          <RestaurantNameContainer>
-            <RestaurantName>Onza</RestaurantName>
-          </RestaurantNameContainer>
-        </RestaurantContainer>
-        <RestaurantContainer>
-          <RestaurantImage src="assets/rest/claro.png" />
-          <RestaurantNameContainer>
-            <RestaurantName>Onza</RestaurantName>
-          </RestaurantNameContainer>
-        </RestaurantContainer>
-        <RestaurantContainer>
-          <RestaurantImage src="assets/rest/claro.png" />
-          <RestaurantNameContainer>
-            <RestaurantName>Onza</RestaurantName>
-          </RestaurantNameContainer>
-        </RestaurantContainer>
-        <RestaurantContainer>
-          <RestaurantImage src="assets/rest/claro.png" />
-          <RestaurantNameContainer>
-            <RestaurantName>Onza</RestaurantName>
-          </RestaurantNameContainer>
-        </RestaurantContainer>
+        {rests.map((rest, index) => {
+          return (
+            <RestaurantContainer
+              key={index}
+              onClick={() => {
+                onRestClicked(rest._id);
+              }}
+            >
+              <RestaurantDiv>
+                <RestaurantImage src={AppBaseUrl + rest.image} />
+                <RestaurantDetails>
+                  <RestaurantName>{rest.name}</RestaurantName>
+                  <RestaurantChef>{rest.chefName}</RestaurantChef>
+                </RestaurantDetails>
+              </RestaurantDiv>
+            </RestaurantContainer>
+          );
+        })}
       </Slider>
     </SliderContainer>
   );
-}
+};
 
-export default RestaurantsSlider;
+export default RestaurantsSliderChef;
 
 const SliderContainer = styled.div`
-  display: flex;
+  margin-top: 50px;
+`;
+
+const RestaurantDiv = styled.div`
+  margin-top: 15px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  gap: 20px;
+  background: #f7e0b2;
+  width: 70%;
+  max-width: 280px;
+  cursor: pointer;
 `;
 
 const SliderHeader = styled.div`
-  font-size: 13.5px;
-  margin-left: 10px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  @media (min-width: 600px) {
+    font-size: 25px;
+  }
 `;
 
 const RestaurantContainer = styled.div`
   display: flex !important;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
 `;
 
 const RestaurantImage = styled.img`
-  width: 90%;
-  height: 110px;
+  width: 100%;
+  height: 180px;
 `;
 
-const RestaurantNameContainer = styled.div`
-  background: beige;
-  width: 90%;
-  height: 80px;
-  text-align: center;
+const RestaurantDetails = styled.div`
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const RestaurantName = styled.div`
-  margin-top: 10px;
-  font-size: 18px;
-  font-weight: 500;
+const RestaurantName = styled.h2`
+  margin-top: 0px;
+  margin-bottom: 0;
+  font-size: 25px;
+`;
+
+const RestaurantChef = styled.div`
+  margin: 0;
+  font-size: 20px;
 `;

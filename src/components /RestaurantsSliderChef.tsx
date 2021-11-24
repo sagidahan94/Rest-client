@@ -3,91 +3,90 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { AppBaseUrl, Restaurants } from "../api";
+import { useHistory } from "react-router-dom";
+
+interface props {
+  rests: Restaurants[];
+}
 
 const settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 1,
+  slidesToShow: 2,
   slidesToScroll: 1,
 };
 
-const RestaurantsSliderChef = () => {
+const RestaurantsSlider: React.FC<props> = ({ rests }) => {
+  const history = useHistory();
+
+  const onRestClicked = (id: string) => {
+    history.push("/restaurant" + "/?id=" + id);
+  };
+
   return (
     <SliderContainer>
-      <SliderHeader>THE POPULAR RESTAURANTS IN EPICURE:</SliderHeader>
+      <SliderHeader>Yossi's restaurants :</SliderHeader>
       <Slider {...settings}>
-        <RestaurantContainer>
-          <RestaurantDiv>
-            <RestaurantImage src="assets/rest/claro.png" />
-            <RestaurantDetails>
-              <RestaurantName>Claro</RestaurantName>
-              <RestaurantChef>Ran Shmueli</RestaurantChef>
-            </RestaurantDetails>
-          </RestaurantDiv>
-        </RestaurantContainer>
-        <RestaurantContainer>
-          <RestaurantDiv>
-            <RestaurantImage src="assets/rest/claro.png" />
-            <RestaurantDetails>
-              <RestaurantName>Claro</RestaurantName>
-              <RestaurantChef>Ran Shmueli</RestaurantChef>
-            </RestaurantDetails>
-          </RestaurantDiv>
-        </RestaurantContainer>
+        {rests.map((rest, index) => {
+          return (
+            <RestaurantContainer
+              key={index}
+              onClick={() => {
+                onRestClicked(rest._id);
+              }}
+            >
+              <RestaurantImage src={AppBaseUrl + rest.image} />
+              <RestaurantNameContainer>
+                <RestaurantName>{rest.name}</RestaurantName>
+              </RestaurantNameContainer>
+            </RestaurantContainer>
+          );
+        })}
       </Slider>
     </SliderContainer>
   );
 };
 
-export default RestaurantsSliderChef;
+export default RestaurantsSlider;
 
 const SliderContainer = styled.div`
-  margin-top: 50px;
-`;
-
-const RestaurantDiv = styled.div`
-  margin-top: 15px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
+  margin-top: 40px;
+  display: flex;
   flex-direction: column;
-  background: #f7e0b2;
-  width: 70%;
-  cursor: pointer;
+  gap: 20px;
 `;
 
 const SliderHeader = styled.div`
-  font-size: 14px;
-  text-align: center;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  margin-left: 10px;
 `;
 
 const RestaurantContainer = styled.div`
   display: flex !important;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const RestaurantImage = styled.img`
-  width: 100%;
-  height: 180px;
+  width: 90%;
+  height: 110px;
 `;
 
-const RestaurantDetails = styled.div`
-  height: 120px;
+const RestaurantNameContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background: beige;
+  width: 90%;
+  height: 80px;
+  text-align: center;
 `;
 
-const RestaurantName = styled.h2`
-  margin-top: 0px;
-  margin-bottom: 0;
-  font-size: 25px;
-`;
-
-const RestaurantChef = styled.div`
-  margin: 0;
+const RestaurantName = styled.div`
   font-size: 20px;
+  font-weight: 500;
 `;

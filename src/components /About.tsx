@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { AppBaseUrl } from "../api";
 
-function About() {
+const About = () => {
   return (
     <AboutBackground>
       <AboutContainer>
@@ -26,13 +27,13 @@ function About() {
         </ContentIconContainer>
         <StoreContainer>
           <AppStoreContainer>
-            <AppleIcon></AppleIcon>
+            <AppleIcon />
             <AppleText>
               Download on the <br /> App Store
             </AppleText>
           </AppStoreContainer>
           <GooglePlayContainer>
-            <PlayIcon></PlayIcon>
+            <PlayIcon />
             <GoogleText>
               Get it on <br />
               Google Play
@@ -42,7 +43,7 @@ function About() {
       </AboutContainer>
     </AboutBackground>
   );
-}
+};
 
 export default About;
 
@@ -57,6 +58,9 @@ const AboutContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px 30px;
+  width: 75%;
+  max-width: 1100px;
+  margin: auto;
   @media (min-width: 600px) {
     align-items: flex-start;
     padding: 40px 100px;
@@ -87,8 +91,12 @@ const ContentContainer = styled.div`
 
 const AboutHeader = styled.div`
   font-size: 14px;
+  letter-spacing: 0.5px;
   @media (min-width: 600px) {
-    font-size: 30px;
+    font-size: 25px;
+    @media (min-width: 800px) {
+      font-size: 30px;
+    }
   }
 `;
 
@@ -97,15 +105,18 @@ const AboutContent = styled.div`
   text-align: center;
   letter-spacing: 1px;
   @media (min-width: 600px) {
-    font-size: 22px;
+    font-size: 16px;
     text-align: left;
+    @media (min-width: 800px) {
+      font-size: 22px;
+    }
   }
 `;
 
 const EpicureIcon = styled.div`
   width: 137px;
   height: 128px;
-  background: url("assets/icons/epicure-footer.png");
+  background: url("${AppBaseUrl}assets/icons/epicure-footer.png");
   background-size: 137px 128px;
 `;
 
@@ -140,23 +151,29 @@ const GooglePlayContainer = styled.div`
 const AppleIcon = styled.div`
   width: 17px;
   height: 21px;
-  background: url("assets/icons/apple.svg");
+  background: url("${AppBaseUrl}assets/icons/apple.svg");
   background-size: 17px 21px;
 `;
 
 const PlayIcon = styled.div`
   width: 14px;
   height: 18px;
-  background: url("assets/icons/play.svg");
+  background: url("${AppBaseUrl}assets/icons/play.svg");
   background-size: 14px 18px;
 `;
 
 const AppleText = styled.div`
   font-size: 9px;
   letter-spacing: 1px;
+  @media (min-width: 600px) {
+    font-size: 11px;
+  }
 `;
 
 const GoogleText = styled.div`
   font-size: 9px;
   letter-spacing: 1px;
+  @media (min-width: 600px) {
+    font-size: 11px;
+  }
 `;

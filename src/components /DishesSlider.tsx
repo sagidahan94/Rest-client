@@ -3,6 +3,14 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useAppDispatch } from "../redux/hooks";
+import { displayActions } from "../redux/slice/display-slice";
+import { AppBaseUrl, Dish } from "../api";
+import { dishActions } from "../redux/slice/dish.slice";
+
+interface props {
+  dishess: Dish[];
+}
 
 const settings = {
   dots: true,
@@ -12,30 +20,42 @@ const settings = {
   slidesToScroll: 1,
 };
 
-function DishesSlider() {
+const DishesSlider: React.FC<props> = ({ dishess }) => {
+  const dispatch = useAppDispatch();
+
+  const onDishClick = (dish: Dish) => {
+    dispatch(dishActions.setdish(dish));
+    dispatch(displayActions.setShowDish(true));
+  };
+
   return (
     <SliderContainer>
       <SliderHeader>SIGNATURE DISH OF:</SliderHeader>
       <RestaurantName>Tiger Lilly</RestaurantName>
       <Slider {...settings}>
-        <DishContainer>
-          <DishDiv>
-            <DishImage src="assets/dishes/pad-ki-mao.png" />
-            <DishDetails>
-              <DishName>Pad Ki Mao</DishName>
-              <DishDescription>
-                Shrimps, Glass Noodles, Kemiri Nuts, Shallots, Lemon Grass,
-                Magic Chili Brown Coconut
-              </DishDescription>
-              <DishIcon src="assets/icons/spicy.svg"></DishIcon>
-              <DishPrice>₪88</DishPrice>
-            </DishDetails>
-          </DishDiv>
-        </DishContainer>
+        {dishess.map((dish, index) => {
+          return (
+            <DishContainer key={index} onClick={() => onDishClick(dish)}>
+              <DishDiv>
+                <DishImage src={AppBaseUrl + dish.image} />
+                <DishDetails>
+                  <DishName>{dish.name}</DishName>
+                  <DishDescription>{dish.ingredients}</DishDescription>
+                  <BottomDetails>
+                    <DishIcon
+                      src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"}
+                    />
+                    <DishPrice>₪{dish.price}</DishPrice>
+                  </BottomDetails>
+                </DishDetails>
+              </DishDiv>
+            </DishContainer>
+          );
+        })}
       </Slider>
     </SliderContainer>
   );
-}
+};
 
 export default DishesSlider;
 
@@ -44,14 +64,26 @@ const SliderContainer = styled.div`
 `;
 
 const SliderHeader = styled.div`
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
+  letter-spacing: 0.5px;
+  @media (min-width: 600px) {
+    font-size: 25px;
+  }
 `;
 
 const RestaurantName = styled.h2`
   margin-bottom: 0;
   font-size: 16px;
+  letter-spacing: 0.5px;
   text-align: center;
+`;
+
+const DishContainer = styled.div`
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const DishDiv = styled.div`
@@ -62,47 +94,56 @@ const DishDiv = styled.div`
   flex-direction: column;
   background: #f7e0b2;
   width: 70%;
+  max-width: 280px;
+  height: 460px;
   cursor: pointer;
-`;
-
-const DishContainer = styled.div`
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
 `;
 
 const DishImage = styled.img`
   width: 100%;
-  height: 180px;
+  height: 45%;
 `;
 
 const DishDetails = styled.div`
-  height: 200px;
   display: flex;
-  margin: 0;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 55%;
 `;
 
-const DishName = styled.h2`
+const DishName = styled.div`
+  width: 80%;
+  height: 15%;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  text-align: center;
   margin-top: 5px;
-  margin-bottom: 5px;
 `;
 
 const DishDescription = styled.div`
   text-align: center;
   font-size: 17px;
+  letter-spacing: 0.5px;
   width: 85%;
+  height: 50%;
+`;
+
+const BottomDetails = styled.div`
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
 `;
 
 const DishIcon = styled.img`
   width: 39px;
   height: 30px;
-  margin-top: 5px;
 `;
 
 const DishPrice = styled.div`
-  margin-top: 5px;
   font-size: 20px;
 `;

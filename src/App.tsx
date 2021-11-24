@@ -1,13 +1,16 @@
 import React from "react";
+import styled from "styled-components";
 import "./App.css";
 import Layout from "./components /Layout";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Layout></Layout>
-    </div>
+    <AppContainer>
+      <Layout />
+    </AppContainer>
   );
-}
+};
 
 export default App;
+
+const AppContainer = styled.div``;

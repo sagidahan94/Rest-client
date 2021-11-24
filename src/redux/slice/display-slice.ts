@@ -3,11 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const displaySlice = createSlice({
   name: "display",
   initialState: {
-    showMenu: false,
+    showDish: false,
+    isLoading: true,
   },
   reducers: {
-    setShowMemu(state) {
-      state.showMenu = !state.showMenu;
+    setShowDish(state, action) {
+      state.showDish = action.payload;
+    },
+    setIsLoading(state, action) {
+      state.isLoading = action.payload;
     },
   },
 });

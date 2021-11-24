@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import { AppBaseUrl } from "../api";
 import MenuModal from "./MenuModal";
 
 const NavbarMobile: React.FC = () => {
@@ -20,9 +21,9 @@ const NavbarMobile: React.FC = () => {
       <Menu onClick={() => onMenuClicked()}></Menu>
       <HomeIcon onClick={() => onHomeIconClicked()}></HomeIcon>
       <RightNav>
-        <Search></Search>
-        <Profile></Profile>
-        <Bag></Bag>
+        <Search />
+        <Profile />
+        <Bag />
       </RightNav>
       <MenuModal isMenuShown={isMenuShown} setIsMenuShown={setIsMenuShown} />
     </Navbar>
@@ -43,7 +44,7 @@ const Navbar = styled.div`
 const HomeIcon = styled.button`
   width: 31px;
   height: 29.6px;
-  background: url("assets/icons/epicure-icon.png");
+  background: url("${AppBaseUrl}assets/icons/epicure-icon.png");
   background-size: 31px 29.6px;
   margin-left: 75px;
   border: none;
@@ -52,7 +53,7 @@ const HomeIcon = styled.button`
 const Menu = styled.button`
   width: 20px;
   height: 18px;
-  background: url("assets/icons/menu.svg");
+  background: url("${AppBaseUrl}assets/icons/menu.svg");
   background-size: 20px 18px;
   border: none;
   margin-left: 15px;
@@ -60,21 +61,21 @@ const Menu = styled.button`
 const Search = styled.button`
   width: 18px;
   height: 18px;
-  background: url("assets/icons/search.svg");
+  background: url("${AppBaseUrl}assets/icons/search.svg");
   background-size: 18px 18px;
   border: none;
 `;
 const Profile = styled.button`
   width: 18px;
   height: 18px;
-  background: url("assets/icons/profile.svg");
+  background: url("${AppBaseUrl}assets/icons/profile.svg");
   background-size: 18px 18px;
   border: none;
 `;
 const Bag = styled.button`
   width: 18px;
   height: 18px;
-  background: url("assets/icons/bag.svg");
+  background: url("${AppBaseUrl}assets/icons/bag.svg");
   background-size: 18px 18px;
   border: none;
 `;

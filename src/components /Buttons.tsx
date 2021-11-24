@@ -33,6 +33,7 @@ const ButtonsContainer = styled.div`
 `;
 
 const Button = styled.button`
+  font-size: 15px;
   padding: 15px 20px;
   background-color: rgba(232, 196, 122, 0.8);
   border: none;

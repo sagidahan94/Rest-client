@@ -1,15 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Dish } from "../../api";
 
-export interface Dish {}
+interface DishState {
+  dish: Dish | undefined;
+}
+
+const initialState: DishState = {
+  dish: undefined,
+};
 
 const dishSlice = createSlice({
   name: "dish",
-  initialState: {
-    dishes: [],
-  },
+  initialState,
   reducers: {
     setdish(state, action) {
-      state.dishes = action.payload;
+      state.dish = action.payload;
     },
   },
 });

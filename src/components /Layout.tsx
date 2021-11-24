@@ -5,12 +5,15 @@ import HomePage from "./pages/HomePage";
 import Footer from "./Footer";
 import RestaurantsPage from "./pages/RestaurantsPage";
 import RestaurantPage from "./pages/RestaurantPage";
-import DishPage from "./pages/DishPage";
+import { useMediaQuery } from "react-responsive";
+import NavbarDesktop from "./NavbarDesktop";
 
 const Layout = () => {
+  const isDesktopScreen = useMediaQuery({ query: "(min-width: 600px)" });
+
   return (
     <BrowserRouter>
-      <NavbarMobile />
+      {isDesktopScreen ? <NavbarDesktop /> : <NavbarMobile />}
       <section className="layout">
         <main>
           <Switch>
@@ -23,11 +26,7 @@ const Layout = () => {
             <Route path="/restaurant">
               <RestaurantPage />
             </Route>
-            <Route path="/dish">
-              <DishPage />
-            </Route>
             <Route path="/chefs"></Route>
-            <Route path="/dishes"></Route>
             <Redirect from="/" to="/home" exact />
           </Switch>
         </main>

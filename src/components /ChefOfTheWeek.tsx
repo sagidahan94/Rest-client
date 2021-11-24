@@ -1,23 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import { AppBaseUrl, Chef } from "../api";
 
-const ChefOfTheWeek = () => {
+interface props {
+  chefOfTheWeek: Chef;
+}
+
+const ChefOfTheWeek: React.FC<props> = ({ chefOfTheWeek }) => {
   return (
     <ChefOfTheWeekContainer>
       <ChefOfTheWeekHeader>CHEF OF THE WEEK :</ChefOfTheWeekHeader>
-      <ChefImageContainer>
-        <ChefImage src="assets/chefs/yossi-shitrit.png" />
-        <ChefNameBackground>
-          <ChefName>Yossi Shitrit</ChefName>
-        </ChefNameBackground>
-      </ChefImageContainer>
-      <ChefDescription>
-        Chef Yossi Shitrit has been living and breathing his culinary dreams for
-        more than two decades, including running the kitchen in his first
-        restaurant, the fondly-remembered Violet, located in Moshav Udim.
-        Shitrit's creativity and culinary acumen born of long experience are
-        expressed in the every detail of each and every dish.
-      </ChefDescription>
+      <ChefContainer>
+        <ChefImageContainer>
+          <ChefImage src={AppBaseUrl + chefOfTheWeek.image} />
+          <ChefNameBackground>
+            <ChefName>{chefOfTheWeek.name}</ChefName>
+          </ChefNameBackground>
+        </ChefImageContainer>
+        <ChefDescription>{chefOfTheWeek.description}</ChefDescription>
+      </ChefContainer>
     </ChefOfTheWeekContainer>
   );
 };
@@ -25,19 +26,66 @@ const ChefOfTheWeek = () => {
 export default ChefOfTheWeek;
 
 const ChefOfTheWeekContainer = styled.div`
-  margin: 20px;
-  // margin-bottom: 5px;
+  width: 75%;
+  max-width: 1100px;
+  margin: auto;
+  margin-top: 60px;
+  @media (max-width: 1000px) {
+    width: 85%;
+  }
 `;
 const ChefOfTheWeekHeader = styled.div`
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 15px;
   letter-spacing: 1px;
+  @media (min-width: 600px) {
+    font-size: 25px;
+  }
 `;
-const ChefImageContainer = styled.div``;
+
+const ChefContainer = styled.div`
+  @media (min-width: 600px) {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    margin-top: 40px;
+    @media (min-width: 800px) {
+      gap: 50px;
+    }
+  }
+`;
+
+const ChefDescription = styled.div`
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13.5px;
+  letter-spacing: 1px;
+  word-spacing: 1px;
+  @media (min-width: 600px) {
+    font-size: 16px;
+    width: 55%;
+    text-align: left;
+    margin-top: 0px;
+    @media (min-width: 800px){
+      font-size:18px
+    }
+    @media (min-width: 1100px){
+      font-size:23px
+    }
+`;
+
+const ChefImageContainer = styled.div`
+  min-width: 270px;
+  @media (min-width: 600px) {
+    width: 45%;
+  }
+`;
 
 const ChefImage = styled.img`
   width: 100%;
+  @media (min-width: 600px) {
+  }
 `;
 
 const ChefName = styled.div`
@@ -54,12 +102,4 @@ const ChefNameBackground = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
-
-const ChefDescription = styled.div`
-  text-align: center;
-  margin-top: 20px;
-  font-size: 13.5px;
-  letter-spacing: 1px;
-  word-spacing: 1px;
 `;
