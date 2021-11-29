@@ -11,10 +11,9 @@ interface props {
 }
 
 const settings = {
-  dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 1,
+  slidesToShow: 1.5,
   slidesToScroll: 1,
 };
 
@@ -66,7 +65,7 @@ const RestaurantDiv = styled.div`
   justify-content: center;
   flex-direction: column;
   background: #f7e0b2;
-  width: 70%;
+  width: 90%;
   max-width: 280px;
   cursor: pointer;
 `;
@@ -99,9 +98,10 @@ const RestaurantDetails = styled.div`
   justify-content: center;
 `;
 
-const RestaurantName = styled.h2`
+const RestaurantName = styled.div`
   margin-top: 0px;
   margin-bottom: 0;
+  font-weight: 500;
   font-size: 25px;
 `;
 

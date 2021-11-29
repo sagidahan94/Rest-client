@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import { PAGE_SIZE } from "../api";
 
 const Buttons: React.FC = () => {
   const history = useHistory();
@@ -10,7 +11,7 @@ const Buttons: React.FC = () => {
   };
 
   const onRestsClicked = () => {
-    history.push("/restaurants");
+    history.push(`/restaurants/?skip=${0}&limit=${PAGE_SIZE}&f=All`);
   };
 
   return (

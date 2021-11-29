@@ -14,7 +14,7 @@ const settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 2,
+  slidesToShow: 2.5,
   slidesToScroll: 1,
 };
 
@@ -81,7 +81,7 @@ const RestaurantNameContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: beige;
-  width: 90%;
+  width: 95%;
   height: 80px;
   text-align: center;
 `;

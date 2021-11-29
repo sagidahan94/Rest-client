@@ -28,11 +28,6 @@ const DishDesktopModal: React.FC = () => {
     }
   };
 
-  // const addToBagHandler = (e: any) => {
-  //   e.preventDefault();
-  //   console.log(e.target);
-  // };
-
   return (
     <Modal isShow={showDish}>
       <DishModalContainer>
@@ -198,7 +193,7 @@ const DishPrice = styled.div`
 const Header = styled.div`
   font-size: 17px;
   letter-spacing: 1px;
-  border-bottom: 1px solid orange;
+  border-bottom: 1px solid black;
   margin-top: 40px;
   margin-bottom: 25px;
   @media (min-width: 600px) {

@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
             <RestaurantsSlider rests={rests} />
           )}
           {isDesktopScreen ? (
-            <DishesHomeDesktop dishess={dishes.slice(0, 3)} />
+            <DishesHomeDesktop dishes={dishes.slice(0, 3)} />
           ) : (
             <DishesSlider dishess={dishes} />
           )}

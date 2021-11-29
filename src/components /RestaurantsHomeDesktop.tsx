@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { AppBaseUrl, Restaurants } from "../api";
+import { AppBaseUrl, PAGE_SIZE, Restaurants } from "../api";
 
 interface props {
   rests: Restaurants[];
@@ -11,7 +11,7 @@ const RestaurantsHomeDesktop: React.FC<props> = ({ rests }) => {
   const history = useHistory();
 
   const onAllRestClicked = () => {
-    history.push("/restaurants");
+    history.push(`/restaurants/?skip=${0}&limit=${PAGE_SIZE}&f=All`);
   };
 
   const onRestClicked = (id: string) => {

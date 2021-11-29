@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { AppBaseUrl } from "../api";
 
-const Hero = () => {
+const Hero: React.FC = () => {
   return (
     <HeroContainer>
       <SearchContainer>
@@ -10,8 +10,8 @@ const Hero = () => {
           Epicure works with the top <br /> chef restaurants in Tel Aviv
         </SearchText>
         <SearchBar>
-          <SearchButton />
           <SearchInput placeholder={SearchPlaceHolder} />
+          <SearchButton />
         </SearchBar>
       </SearchContainer>
     </HeroContainer>
@@ -96,6 +96,7 @@ const SearchButton = styled.button`
 `;
 
 const SearchInput = styled.input`
+  font-size: 12px;
   background: inherit;
   width: 80%;
   border: none;

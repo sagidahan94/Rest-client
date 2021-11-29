@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { AppBaseUrl } from "../api";
 
-const DishesMap = () => {
+const DishesMap: React.FC = () => {
   return (
     <MapContainer>
       <MapHeader>THE MEANING OF OUR ICONS :</MapHeader>

@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { apiClient, AppBaseUrl, Dish, Rest } from "../../api";
+import { apiClient, AppBaseUrl, Dish, openNow, Rest } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { dishActions } from "../../redux/slice/dish.slice";
 import { displayActions } from "../../redux/slice/display-slice";
 import DishPage from "../DishModal";
 import LoadingPage from "./LoadingPage";
-import { openNow } from "../../api";
 
-const RestaurantPage = () => {
+const RestaurantPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.display.isLoading);
   const showDish = useAppSelector((state) => state.display.showDish);
   const [rest, setRest] = useState<Rest>();
-  const [breakfastDishes, setBreakfastDishes] = useState<Dish[]>();
-  const [lunchtDishes, setLunchtDishes] = useState<Dish[]>();
-  const [dinnerDishes, setDinnerDishes] = useState<Dish[]>();
+  const [displayDishes, setDispalyDishes] = useState<Dish[]>();
+  const [selectedTab, setselectedTab] = useState<string>("Breakfast");
   const [open, setOpen] = useState<boolean>();
   const params = new URLSearchParams(window.location.search);
 
@@ -26,21 +24,25 @@ const RestaurantPage = () => {
       setRest(fetchRest);
     };
     fetcApi();
+    const dishes = rest?.dishes.filter((dish) =>
+      dish.tags.includes("Breakfast")
+    );
+    setDispalyDishes(dishes);
   }, []);
 
   useEffect(() => {
-    if (rest) {
-      openNow(rest.openingHours) ? setOpen(true) : setOpen(false);
-      const breakfast = rest.dishes.filter((dish) =>
-        dish.tags.includes("Breakfast")
-      );
-      const lunch = rest.dishes.filter((dish) => dish.tags.includes("Lunch"));
-      const dinner = rest.dishes.filter((dish) => dish.tags.includes("Dinner"));
-      setBreakfastDishes(breakfast);
-      setLunchtDishes(lunch);
-      setDinnerDishes(dinner);
-    }
+    const dishes = rest?.dishes.filter((dish) =>
+      dish.tags.includes("Breakfast")
+    );
+    setDispalyDishes(dishes);
+    setOpen(openNow(rest?.openingHours));
   }, [rest]);
+
+  const onTabClicked = (tabName: string) => {
+    const dishes = rest?.dishes.filter((dish) => dish.tags.includes(tabName));
+    setDispalyDishes(dishes);
+    setselectedTab(tabName);
+  };
 
   const onDishClick = (dish: any) => {
     dispatch(dishActions.setdish(dish));
@@ -59,86 +61,47 @@ const RestaurantPage = () => {
             <OpenStatus>{open ? "Open now" : "Closed"}</OpenStatus>
           </OpenContainer>
           <TabsContainer>
-            <Tab href="#breakfast">Breakfast</Tab>
-            <Tab href="#lunch">Lunch</Tab>
-            <Tab href="#dinner">Dinner</Tab>
+            <Tab
+              isSelected={selectedTab === "Breakfast"}
+              onClick={() => onTabClicked("Breakfast")}
+            >
+              Breakfast
+            </Tab>
+            <Tab
+              isSelected={selectedTab === "Lunch"}
+              onClick={() => onTabClicked("Lunch")}
+            >
+              Lunch
+            </Tab>
+            <Tab
+              isSelected={selectedTab === "Dinner"}
+              onClick={() => onTabClicked("Dinner")}
+            >
+              Dinner
+            </Tab>
           </TabsContainer>
           <DishesContainer>
-            {breakfastDishes?.length ? (
-              <Section id="breakfast">
-                <SectionText>BREAKFAST</SectionText>
-                <Line></Line>
-              </Section>
+            {displayDishes?.length ? (
+              displayDishes?.map((dish, index) => {
+                return (
+                  <DishContainer key={index} onClick={() => onDishClick(dish)}>
+                    <DishImage src={AppBaseUrl + dish.image} />
+                    <DishDetails>
+                      <DishName>{dish.name}</DishName>
+                      <DishDescription>{dish.ingredients}</DishDescription>
+                      <BottomDetails>
+                        <DishIcon
+                          src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"}
+                        />
+                        <DishPrice>₪{dish.price}</DishPrice>
+                      </BottomDetails>
+                    </DishDetails>
+                  </DishContainer>
+                );
+              })
             ) : (
-              ""
+              <h1>There is no {selectedTab} Dishes</h1>
             )}
-            {breakfastDishes?.map((dish, index) => {
-              return (
-                <DishContainer key={index} onClick={() => onDishClick(dish)}>
-                  <DishImage src={AppBaseUrl + dish.image} />
-                  <DishDetails>
-                    <DishName>{dish.name}</DishName>
-                    <DishDescription>{dish.ingredients}</DishDescription>
-                    <BottomDetails>
-                      <DishIcon
-                        src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"}
-                      />
-                      <DishPrice>₪{dish.price}</DishPrice>
-                    </BottomDetails>
-                  </DishDetails>
-                </DishContainer>
-              );
-            })}
-            {lunchtDishes?.length ? (
-              <Section id="lunch">
-                <SectionText>LUNCH</SectionText>
-                <Line></Line>
-              </Section>
-            ) : (
-              ""
-            )}
-            {lunchtDishes?.map((dish, index) => {
-              return (
-                <DishContainer key={index} onClick={() => onDishClick(dish)}>
-                  <DishImage src={AppBaseUrl + dish.image} />
-                  <DishDetails>
-                    <DishName>{dish.name}</DishName>
-                    <DishDescription>{dish.ingredients}</DishDescription>
-                    <BottomDetails>
-                      <DishIcon
-                        src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"}
-                      />
-                      <DishPrice>₪{dish.price}</DishPrice>
-                    </BottomDetails>
-                  </DishDetails>
-                </DishContainer>
-              );
-            })}
-            {dinnerDishes?.length ? (
-              <Section id="dinner">
-                <SectionText>DINNER</SectionText>
-                <Line></Line>
-              </Section>
-            ) : (
-              ""
-            )}
-            {dinnerDishes?.map((dish, index) => {
-              return (
-                <DishContainer key={index} onClick={() => onDishClick(dish)}>
-                  <DishImage src={AppBaseUrl + dish.image} />
-                  <DishDetails>
-                    <DishName>{dish.name}</DishName>
-                    <DishDescription>{dish.ingredients}</DishDescription>
-                    <BottomDetails>
-                      <DishIcon
-                        src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"}
-                      />
-                      <DishPrice>₪{dish.price}</DishPrice>
-                    </BottomDetails>
-                  </DishDetails>
-                </DishContainer>
-              );
-            })}
           </DishesContainer>
 
           {showDish && <DishPage />}
@@ -231,17 +194,19 @@ const TabsContainer = styled.div`
   }
 `;
 
-const Tab = styled.a`
+const Tab = styled.div`
   font-size: 17px;
   letter-spacing: 1px;
   cursor: pointer;
   color: inherit;
   text-decoration: inherit;
+  border: none
+  border: 2px solid transparent;
+  border-bottom: 2px solid orange;
+  border: ${(props: { isSelected: boolean }) =>
+    props.isSelected ? "" : "hidden"};
   @media (min-width: 800px) {
     font-size: 20px;
-    :hover {
-      border-bottom: 2px solid orange;
-    }
   }
 `;
 
@@ -364,35 +329,5 @@ const DishPrice = styled.div`
   font-size: 14px;
   @media (min-width: 600px) {
     font-size: 18px;
-  }
-`;
-
-const Section = styled.div`
-  width: 100%;
-  text-align: center;
-  margin: 20px 0;
-`;
-
-const Line = styled.div`
-  width: 100%;
-  text-align: center;
-  border-bottom: 1px solid #000;
-  line-height: 0.1em;
-  margin: auto;
-  margin-top: -10px;
-`;
-
-const SectionText = styled.div`
-  font-size: 14px;
-  letter-spacing: 1px;
-  width: 30%;
-  background: white;
-  margin-bottom: -10px;
-  margin: auto;
-  padding: 0px 10px;
-  position: relative;
-  margin-bottom: -10px;
-  @media (min-width: 600px) {
-    font-size: 20px;
   }
 `;

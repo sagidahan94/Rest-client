@@ -1,66 +1,153 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { apiClient, AppBaseUrl, Rest } from "../../api";
-import { NewDate, openNow } from "../../api";
+import { apiClient, AppBaseUrl, PAGE_SIZE, Rest } from "../../api";
 
-const RestaurantsPage = () => {
+const RestaurantsPage: React.FC = () => {
   const history = useHistory();
-  const [rests, setRests] = useState<Rest[]>();
   const [selectedTab, setselectedTab] = useState<string>("All");
   const [restToShow, setRestToShow] = useState<Rest[]>();
+  const [page, setPage] = useState<number>(1);
+  const [maxPages, setMaxPages] = useState<number>();
+  const params = new URLSearchParams(window.location.search);
 
-  const onRestClicked = (id: string) => {
-    history.push("/restaurant" + "/?id=" + id);
-  };
-
+  // initialize
   useEffect(() => {
     const fetcApi = async () => {
-      const rests = await apiClient.getAllItems("restaurants");
-      setRests(rests);
-      setRestToShow(rests);
+      const filter = params.get("f");
+      const skip = parseInt(params.get("skip")!);
+      const rests = await apiClient.getFilterRestaurants(
+        "restaurants",
+        skip,
+        PAGE_SIZE,
+        filter
+      );
+      setRestToShow(rests.data);
+      setMaxPages(Math.ceil(rests.numsOfItems / PAGE_SIZE));
     };
     fetcApi();
   }, []);
 
-  const onNewClicked = () => {
-    const newRests = rests?.filter((rest) => new Date(rest.since) > NewDate);
-    setRestToShow(newRests);
-    setselectedTab("New");
+  // After Page clicked
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    const fetcApi = async () => {
+      const filter = params.get("f");
+      const skip = parseInt(params.get("skip")!);
+      const rests = await apiClient.getFilterRestaurants(
+        "restaurants",
+        skip,
+        PAGE_SIZE,
+        filter
+      );
+      setRestToShow(rests.data);
+    };
+    fetcApi();
+  }, [page]);
+
+  // After Tab clicked
+  useEffect(() => {
+    setPage(1);
+    const fetcApi = async () => {
+      const filter = params.get("f");
+      const rests = await apiClient.getFilterRestaurants(
+        "restaurants",
+        0,
+        PAGE_SIZE,
+        filter
+      );
+      setRestToShow(rests.data);
+      setMaxPages(Math.ceil(rests.numsOfItems / PAGE_SIZE));
+    };
+    fetcApi();
+  }, [selectedTab]);
+
+  // Restaurants click handler
+  const onRestClicked = (id: string) => {
+    history.push("/restaurant" + "/?id=" + id);
   };
 
-  const onOpenClicked = () => {
-    const newRests = rests?.filter((rest) => openNow(rest.openingHours));
-    setRestToShow(newRests);
-    setselectedTab("Open");
+  // Tab click handler
+  const onTabClicked = (tab: string) => {
+    setselectedTab(tab);
+    history.push(`/restaurants/?skip=${0}&limit=${PAGE_SIZE}&f=${tab}`);
   };
 
-  const onPopularClicked = () => {
-    const newRests = rests?.filter((rest) => rest.popular);
-    console.log(newRests);
-    setRestToShow(newRests);
-    setselectedTab("Popular");
+  // Page click handler
+  const onPageClicked = (page: number) => {
+    setPage(page);
+    history.push(
+      `/restaurants/?skip=${
+        (page - 1) * PAGE_SIZE
+      }&limit=${PAGE_SIZE}&f=${selectedTab}`
+    );
   };
 
-  const onAllClicked = () => {
-    setRestToShow(rests);
-    setselectedTab("All");
-  };
+  // PAGING SECTION
+  const arr: any[] = [];
+  if (page > 1) {
+    arr.push(
+      <PageNumber isSelected={false} onClick={() => onPageClicked(page - 1)}>
+        Prev
+      </PageNumber>
+    );
+  }
+
+  for (let i = 1; i <= maxPages!; i++) {
+    if (page - 3 < i && i < page + 3) {
+      arr.push(
+        <PageNumber
+          key={i}
+          isSelected={i === page}
+          onClick={() => onPageClicked(i)}
+        >
+          {i}
+        </PageNumber>
+      );
+    }
+  }
+
+  if (page < maxPages!) {
+    arr.push(
+      <PageNumber isSelected={false} onClick={() => onPageClicked(page + 1)}>
+        Next
+      </PageNumber>
+    );
+  }
 
   return (
     <PageContainer>
       <PageHeader>RESTAURANTS</PageHeader>
       <TabsContainer>
-        <Tab isSelected={selectedTab === "All"} onClick={onAllClicked}>
+        <Tab
+          title={"All"}
+          isSelected={selectedTab === "All"}
+          onClick={() => onTabClicked("All")}
+        >
           All
         </Tab>
-        <Tab isSelected={selectedTab === "New"} onClick={onNewClicked}>
+        <Tab
+          title={"New"}
+          isSelected={selectedTab === "New"}
+          onClick={() => onTabClicked("New")}
+        >
           New
         </Tab>
-        <Tab isSelected={selectedTab === "Popular"} onClick={onPopularClicked}>
+        <Tab
+          title={"Most Popular"}
+          isSelected={selectedTab === "Popular"}
+          onClick={() => onTabClicked("Popular")}
+        >
           Most Popular
         </Tab>
-        <Tab isSelected={selectedTab === "Open"} onClick={onOpenClicked}>
+        <Tab
+          title={"Open Now"}
+          isSelected={selectedTab === "Open"}
+          onClick={() => onTabClicked("Open")}
+        >
           Open Now
         </Tab>
       </TabsContainer>
@@ -82,6 +169,7 @@ const RestaurantsPage = () => {
           );
         })}
       </RestaurantsContainer>
+      <PagingContainer>{arr}</PagingContainer>
     </PageContainer>
   );
 };
@@ -96,8 +184,10 @@ const PageContainer = styled.div`
   gap: 20px;
   width: 90%;
   max-width: 1100px;
+  min-height: 700px;
   @media (min-width: 800px) {
     width: 85%;
+    min-height: 1176px;
     @media (min-width: 1720px) {
       max-width: none;
     }
@@ -125,12 +215,23 @@ const TabsContainer = styled.div`
   }
 `;
 
-const Tab = styled.a`
+const Tab = styled.div`
   font-size: 16px;
   font-weight: ${(props: { isSelected: boolean }) =>
     props.isSelected ? "700" : ""};
   letter-spacing: 1px;
   cursor: pointer;
+  text-align: center;
+  ::after {
+    display: block;
+    content: attr(title);
+    font-weight: 700;
+    height: 1px;
+    color: transparent;
+    overflow: hidden;
+    visibility: hidden;
+    letter-spacing: 1px;
+  }
   @media (min-width: 600px) {
     font-size: 16px;
     @media (min-width: 800px) {
@@ -219,5 +320,22 @@ const RestaurantChef = styled.div`
     @media (min-width: 1000px) {
       font-size: 25px;
     }
+  }
+`;
+
+const PagingContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+`;
+
+const PageNumber = styled.li`
+  list-style: none;
+  font-size: 15px;
+  font-weight: ${(props: { isSelected: boolean }) =>
+    props.isSelected ? "700" : ""};
+  cursor: pointer;
+  @media (min-width: 600px) {
+    font-size: 25px;
   }
 `;

@@ -1,13 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialeMap = function (): Map<string, []> {
+  const map = new Map();
+  map.set("All", []);
+  map.set("New", []);
+  map.set("Open", []);
+  map.set("Popular", []);
+  return map;
+};
+
 const restaurantSlice = createSlice({
   name: "restaurant",
   initialState: {
-    restaurant: [],
+    restaurants: initialeMap(),
   },
   reducers: {
     setrestaurant(state, action) {
-      state.restaurant = action.payload;
+      state.restaurants = action.payload;
     },
   },
 });

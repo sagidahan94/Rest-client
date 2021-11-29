@@ -6,10 +6,10 @@ import { dishActions } from "../redux/slice/dish.slice";
 import { displayActions } from "../redux/slice/display-slice";
 
 interface props {
-  dishess: Dish[];
+  dishes: Dish[];
 }
 
-const DishesHomeDesktop: React.FC<props> = ({ dishess }) => {
+const DishesHomeDesktop: React.FC<props> = ({ dishes }) => {
   const dispatch = useAppDispatch();
 
   const onDishClick = (dish: Dish) => {
@@ -21,7 +21,7 @@ const DishesHomeDesktop: React.FC<props> = ({ dishess }) => {
     <DishesDisplayContainer>
       <Header>SIGNATURE DISH OF :</Header>
       <DishesContainer>
-        {dishess.map((dish, index) => {
+        {dishes.map((dish, index) => {
           return (
             <DishContainer key={index} onClick={() => onDishClick(dish)}>
               <RestaurantName>Tiger Lilly</RestaurantName>

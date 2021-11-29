@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { AppBaseUrl } from "../api";
 import MenuModal from "./MenuModal";
 
+const SearchPlaceHolder = "Search for resturatns cuisine, chef";
+
 const NavbarMobile: React.FC = () => {
   const history = useHistory();
   const [isMenuShown, setIsMenuShown] = useState<boolean>(false);
@@ -21,7 +23,7 @@ const NavbarMobile: React.FC = () => {
       <Menu onClick={() => onMenuClicked()}></Menu>
       <HomeIcon onClick={() => onHomeIconClicked()}></HomeIcon>
       <RightNav>
-        <Search />
+        <SearchInput placeholder={SearchPlaceHolder} />
         <Profile />
         <Bag />
       </RightNav>
@@ -58,13 +60,35 @@ const Menu = styled.button`
   border: none;
   margin-left: 15px;
 `;
-const Search = styled.button`
+
+const RightNav = styled.div`
+  display: flex;
+  justify-content: left;
+  margin-right: 15px;
+  gap: 15px;
+`;
+
+const SearchInput = styled.input`
+  display: block;
   width: 18px;
   height: 18px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 10px;
+  background-color: white;
   background: url("${AppBaseUrl}assets/icons/search.svg");
   background-size: 18px 18px;
+  background-position: right;
   border: none;
+  background-repeat: no-repeat;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  :focus {
+    width: 100px;
+  }
 `;
+
 const Profile = styled.button`
   width: 18px;
   height: 18px;
@@ -78,11 +102,4 @@ const Bag = styled.button`
   background: url("${AppBaseUrl}assets/icons/bag.svg");
   background-size: 18px 18px;
   border: none;
-`;
-
-const RightNav = styled.div`
-  display: flex;
-  justify-content: left;
-  margin-right: 15px;
-  gap: 25px;
 `;

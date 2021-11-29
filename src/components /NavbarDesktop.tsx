@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { AppBaseUrl } from "../api";
+import { AppBaseUrl, PAGE_SIZE } from "../api";
 
 const NavbarDesktop: React.FC = () => {
   const history = useHistory();
   const [route, setRoute] = useState("home");
 
   const onRestaurantsClicked = () => {
-    history.push("/restaurants");
+    history.push(`/restaurants/?skip=${0}&limit=${PAGE_SIZE}&f=All`);
     setRoute("restaurants");
   };
 

@@ -8,7 +8,7 @@ import RestaurantPage from "./pages/RestaurantPage";
 import { useMediaQuery } from "react-responsive";
 import NavbarDesktop from "./NavbarDesktop";
 
-const Layout = () => {
+const Layout: React.FC = () => {
   const isDesktopScreen = useMediaQuery({ query: "(min-width: 600px)" });
 
   return (

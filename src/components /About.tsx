@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { AppBaseUrl } from "../api";
 
-const About = () => {
+const About: React.FC = () => {
   return (
     <AboutBackground>
       <AboutContainer>

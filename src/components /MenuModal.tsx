@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import { PAGE_SIZE } from "../api";
 
 interface props {
   isMenuShown: boolean;
@@ -17,9 +18,9 @@ const MenuModal: React.FC<props> = ({ isMenuShown, setIsMenuShown }) => {
     setIsMenuShown(false);
     history.push("/chefs");
   };
-  const onRestClicked = () => {
+  const onRestsClicked = () => {
     setIsMenuShown(false);
-    history.push("/restaurants");
+    history.push(`/restaurants/?skip=${0}&limit=${PAGE_SIZE}&f=All`);
   };
 
   return (
@@ -29,7 +30,7 @@ const MenuModal: React.FC<props> = ({ isMenuShown, setIsMenuShown }) => {
       </CloseBackground>
       <TabsContainer>
         <Tab onClick={() => onChefsClicked()}>Chefs</Tab>
-        <Tab onClick={() => onRestClicked()}>All Restaurants</Tab>
+        <Tab onClick={() => onRestsClicked()}>All Restaurants</Tab>
         <Border />
         <Tab>Sign in</Tab>
         <Tab>Contact us</Tab>
