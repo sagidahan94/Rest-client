@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useAppDispatch } from "../redux/hooks";
 import { displayActions } from "../redux/slice/display-slice";
-import { AppBaseUrl, Dish } from "../api";
+import { appBaseUrl, Dish } from "../api";
 import { dishActions } from "../redux/slice/dish.slice";
 
 interface props {
@@ -36,13 +36,13 @@ const DishesSlider: React.FC<props> = ({ dishess }) => {
           return (
             <DishContainer key={index} onClick={() => onDishClick(dish)}>
               <DishDiv>
-                <DishImage src={AppBaseUrl + dish.image} />
+                <DishImage src={appBaseUrl + dish.image} />
                 <DishDetails>
                   <DishName>{dish.name}</DishName>
                   <DishDescription>{dish.ingredients}</DishDescription>
                   <BottomDetails>
                     <DishIcon
-                      src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"}
+                      src={appBaseUrl + "assets/icons/spicy-icon@2x.png"}
                     />
                     <DishPrice>₪{dish.price}</DishPrice>
                   </BottomDetails>

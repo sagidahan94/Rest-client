@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AppBaseUrl, Chef } from "../api";
+import { appBaseUrl, Chef } from "../api";
 
 interface props {
   chefOfTheWeek: Chef;
@@ -12,7 +12,7 @@ const ChefOfTheWeek: React.FC<props> = ({ chefOfTheWeek }) => {
       <ChefOfTheWeekHeader>CHEF OF THE WEEK :</ChefOfTheWeekHeader>
       <ChefContainer>
         <ChefImageContainer>
-          <ChefImage src={AppBaseUrl + chefOfTheWeek.image} />
+          <ChefImage src={appBaseUrl + chefOfTheWeek.image} />
           <ChefNameBackground>
             <ChefName>{chefOfTheWeek.name}</ChefName>
           </ChefNameBackground>

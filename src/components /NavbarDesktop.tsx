@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { AppBaseUrl, PAGE_SIZE } from "../api";
+import { appBaseUrl, PAGE_SIZE } from "../api";
 
 const NavbarDesktop: React.FC = () => {
   const history = useHistory();
@@ -26,7 +26,7 @@ const NavbarDesktop: React.FC = () => {
     <NavbarContainer>
       <LeftBarContainer>
         <HomeContainer onClick={onHomeIconClicked}>
-          <HomeIcon src={AppBaseUrl + "assets/icons/epicure-icon.png"} />
+          <HomeIcon src={appBaseUrl + "assets/icons/epicure-icon.png"} />
           <HomeText>EPICURE</HomeText>
         </HomeContainer>
         <SectionButton
@@ -136,7 +136,7 @@ const SearchBar = styled.div`
 const SearchButton = styled.button`
   width: 18px;
   height: 18px;
-  background: url("${AppBaseUrl}assets/icons/search.svg");
+  background: url("${appBaseUrl}assets/icons/search.svg");
   background-size: 18px 18px;
   border: none;
 `;
@@ -153,7 +153,7 @@ const SearchInput = styled.input`
 const Profile = styled.button`
   width: 21px;
   height: 21px;
-  background: url("${AppBaseUrl}assets/icons/profile.svg");
+  background: url("${appBaseUrl}assets/icons/profile.svg");
   background-size: 21px 21px;
   background-repeat: no-repeat;
 
@@ -162,7 +162,7 @@ const Profile = styled.button`
 const Bag = styled.button`
   width: 21px;
   height: 21px;
-  background: url("${AppBaseUrl}assets/icons/bag.svg");
+  background: url("${appBaseUrl}assets/icons/bag.svg");
   background-size: 21px 21px;
   background-repeat: no-repeat;
   border: none;

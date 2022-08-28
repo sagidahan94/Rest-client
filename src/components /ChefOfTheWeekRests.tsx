@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { AppBaseUrl, Chef, Restaurants } from "../api";
+import { appBaseUrl, Chef, Restaurants } from "../api";
 
 interface props {
   rests: Restaurants[];
@@ -27,7 +27,7 @@ const ChefOfTheWeekRests: React.FC<props> = ({ rests, chefOfTheWeek }) => {
                 onRestClicked(rest._id);
               }}
             >
-              <RestaurantImage src={AppBaseUrl + rest.image} />
+              <RestaurantImage src={appBaseUrl + rest.image} />
               <DetailsContainer>
                 <RestaurantName>{rest.name}</RestaurantName>
                 <RestaurantChef>{rest.chefName}</RestaurantChef>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AppBaseUrl } from "../api";
+import { appBaseUrl } from "../api";
 
 const DishesMap: React.FC = () => {
   return (
@@ -8,15 +8,15 @@ const DishesMap: React.FC = () => {
       <MapHeader>THE MEANING OF OUR ICONS :</MapHeader>
       <IconsContainer>
         <IconContainer>
-          <SpicyIcon src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"} />
+          <SpicyIcon src={appBaseUrl + "assets/icons/spicy-icon@2x.png"} />
           <IconName>Spicy</IconName>
         </IconContainer>
         <IconContainer>
-          <VegitarianIcon src={AppBaseUrl + "assets/icons/vegetarian@2x.png"} />
+          <VegitarianIcon src={appBaseUrl + "assets/icons/vegetarian@2x.png"} />
           <IconName>Vegitarian</IconName>
         </IconContainer>
         <IconContainer>
-          <VeganIcon src={AppBaseUrl + "assets/icons/vegan@2x.png"} />
+          <VeganIcon src={appBaseUrl + "assets/icons/vegan@2x.png"} />
           <IconName>Vegan</IconName>
         </IconContainer>
       </IconsContainer>

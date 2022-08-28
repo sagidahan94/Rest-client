@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { apiClient, AppBaseUrl, Dish, openNow, Rest } from "../../api";
+import { apiClient, appBaseUrl, Dish, openNow, Rest } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { dishActions } from "../../redux/slice/dish.slice";
 import { displayActions } from "../../redux/slice/display-slice";
@@ -53,11 +53,11 @@ const RestaurantPage: React.FC = () => {
     <>
       {isLoading ? (
         <PageContainer>
-          <RestaurantImage src={AppBaseUrl + rest?.pageImage} />
+          <RestaurantImage src={appBaseUrl + rest?.pageImage} />
           <RestaurantName>{rest?.name}</RestaurantName>
           <RestaurantChef>{rest?.chefName}</RestaurantChef>
           <OpenContainer>
-            <OpenIcon src={AppBaseUrl + "assets/icons/clock.svg"} />
+            <OpenIcon src={appBaseUrl + "assets/icons/clock.svg"} />
             <OpenStatus>{open ? "Open now" : "Closed"}</OpenStatus>
           </OpenContainer>
           <TabsContainer>
@@ -85,13 +85,13 @@ const RestaurantPage: React.FC = () => {
               displayDishes?.map((dish, index) => {
                 return (
                   <DishContainer key={index} onClick={() => onDishClick(dish)}>
-                    <DishImage src={AppBaseUrl + dish.image} />
+                    <DishImage src={appBaseUrl + dish.image} />
                     <DishDetails>
                       <DishName>{dish.name}</DishName>
                       <DishDescription>{dish.ingredients}</DishDescription>
                       <BottomDetails>
                         <DishIcon
-                          src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"}
+                          src={appBaseUrl + "assets/icons/spicy-icon@2x.png"}
                         />
                         <DishPrice>₪{dish.price}</DishPrice>
                       </BottomDetails>

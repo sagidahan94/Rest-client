@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { apiClient, AppBaseUrl, PAGE_SIZE, Rest } from "../../api";
+import { apiClient, appBaseUrl, PAGE_SIZE, Rest } from "../../api";
 
 const RestaurantsPage: React.FC = () => {
   const history = useHistory();
@@ -160,7 +160,7 @@ const RestaurantsPage: React.FC = () => {
                 onRestClicked(rest._id);
               }}
             >
-              <RestaurantImage src={AppBaseUrl + rest.image}></RestaurantImage>
+              <RestaurantImage src={appBaseUrl + rest.image}></RestaurantImage>
               <RestaurantDetails>
                 <RestaurantName>{rest.name}</RestaurantName>
                 <RestaurantChef>{rest.chefName}</RestaurantChef>

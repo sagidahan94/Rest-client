@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AppBaseUrl, Dish } from "../api";
+import { appBaseUrl, Dish } from "../api";
 import { useAppDispatch } from "../redux/hooks";
 import { dishActions } from "../redux/slice/dish.slice";
 import { displayActions } from "../redux/slice/display-slice";
@@ -26,13 +26,13 @@ const DishesHomeDesktop: React.FC<props> = ({ dishes }) => {
             <DishContainer key={index} onClick={() => onDishClick(dish)}>
               <RestaurantName>Tiger Lilly</RestaurantName>
               <CardContainer>
-                <DishImage src={AppBaseUrl + dish.image} />
+                <DishImage src={appBaseUrl + dish.image} />
                 <DishDetails>
                   <DishName>{dish.name}</DishName>
                   <DishDescription>{dish.ingredients}</DishDescription>
                   <BottomDetails>
                     <DishIcon
-                      src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"}
+                      src={appBaseUrl + "assets/icons/spicy-icon@2x.png"}
                     />
                     <DishPrice>₪{dish.price}</DishPrice>
                   </BottomDetails>

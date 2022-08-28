@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { AppBaseUrl, PAGE_SIZE, Restaurants } from "../api";
+import { appBaseUrl, PAGE_SIZE, Restaurants } from "../api";
 
 interface props {
   rests: Restaurants[];
@@ -32,7 +32,7 @@ const RestaurantsHomeDesktop: React.FC<props> = ({ rests }) => {
                 onRestClicked(rest._id);
               }}
             >
-              <RestaurantImage src={AppBaseUrl + rest.image} />
+              <RestaurantImage src={appBaseUrl + rest.image} />
               <DetailsContainer>
                 <RestaurantName>{rest.name}</RestaurantName>
                 <RestaurantChef>{rest.chefName}</RestaurantChef>
@@ -43,7 +43,7 @@ const RestaurantsHomeDesktop: React.FC<props> = ({ rests }) => {
       </RestaurantsContainer>
       <ButtonContainer onClick={onAllRestClicked}>
         <AllRestButton>All Restaurants</AllRestButton>
-        <ArrowIcon src={AppBaseUrl + "assets/icons/arrow.svg"} />
+        <ArrowIcon src={appBaseUrl + "assets/icons/arrow.svg"} />
       </ButtonContainer>
     </RestaurantsDisplayContainer>
   );

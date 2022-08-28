@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { AppBaseUrl, Restaurants } from "../api";
+import { appBaseUrl, Restaurants } from "../api";
 import { useHistory } from "react-router-dom";
 
 interface props {
@@ -37,7 +37,7 @@ const RestaurantsSlider: React.FC<props> = ({ rests }) => {
                 onRestClicked(rest._id);
               }}
             >
-              <RestaurantImage src={AppBaseUrl + rest.image} />
+              <RestaurantImage src={appBaseUrl + rest.image} />
               <RestaurantNameContainer>
                 <RestaurantName>{rest.name}</RestaurantName>
               </RestaurantNameContainer>

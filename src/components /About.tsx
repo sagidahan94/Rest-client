@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AppBaseUrl } from "../api";
+import { appBaseUrl } from "../api";
 
 const About: React.FC = () => {
   return (
@@ -116,7 +116,7 @@ const AboutContent = styled.div`
 const EpicureIcon = styled.div`
   width: 137px;
   height: 128px;
-  background: url("${AppBaseUrl}assets/icons/epicure-footer.png");
+  background: url("${appBaseUrl}assets/icons/epicure-footer.png");
   background-size: 137px 128px;
 `;
 
@@ -151,14 +151,14 @@ const GooglePlayContainer = styled.div`
 const AppleIcon = styled.div`
   width: 17px;
   height: 21px;
-  background: url("${AppBaseUrl}assets/icons/apple.svg");
+  background: url("${appBaseUrl}assets/icons/apple.svg");
   background-size: 17px 21px;
 `;
 
 const PlayIcon = styled.div`
   width: 14px;
   height: 18px;
-  background: url("${AppBaseUrl}assets/icons/play.svg");
+  background: url("${appBaseUrl}assets/icons/play.svg");
   background-size: 14px 18px;
 `;
 

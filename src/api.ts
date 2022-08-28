@@ -43,11 +43,11 @@ export interface Dish {
   tags: string[];
 }
 
-const ServerBaseUrl = "http://localhost:8081";
+const serverBaseUrl = "http://localhost:8081";
 
-export const AppBaseUrl = "http://localhost:3000/";
+export const appBaseUrl = "http://localhost:3000/";
 
-export const NewDate = new Date(2010, 10);
+export const newDate = new Date(2010, 10);
 
 export const PAGE_SIZE = 9;
 
@@ -86,7 +86,7 @@ export const openNow = (hours: string | undefined) => {
 class ApiClient {
   public async getAllItems(collection: string) {
     return axios
-      .get(ServerBaseUrl + "/api/v1/" + `${collection}`, {
+      .get(serverBaseUrl + "/api/v1/" + `${collection}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -104,7 +104,7 @@ class ApiClient {
   ) {
     return axios
       .get(
-        ServerBaseUrl +
+        serverBaseUrl +
           "/api/v1/" +
           `${collection}` +
           `?skip=${skip}&limit=${limit}&f=${filter}`,
@@ -122,7 +122,7 @@ class ApiClient {
   public async getItem(collection: string, id: string | null) {
     if (id) {
       return axios
-        .get(ServerBaseUrl + "/api/v1/" + `${collection}` + "/" + `${id}`, {
+        .get(serverBaseUrl + "/api/v1/" + `${collection}` + "/" + `${id}`, {
           headers: {
             "Content-Type": "application/json",
           },

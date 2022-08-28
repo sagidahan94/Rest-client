@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { AppBaseUrl } from "../api";
+import { appBaseUrl } from "../api";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { dishActions } from "../redux/slice/dish.slice";
 import { displayActions } from "../redux/slice/display-slice";
@@ -34,13 +34,13 @@ const DishDesktopModal: React.FC = () => {
         <CloseBackground>
           <Close onClick={() => onCloseClick()}>X</Close>
         </CloseBackground>
-        <DishImage src={AppBaseUrl + dish?.image} />
+        <DishImage src={appBaseUrl + dish?.image} />
         <DishDetails>
           <DishName>{dish?.name}</DishName>
           <DishDescription>{dish?.ingredients}</DishDescription>
           <DishIconsContainer>
-            <DishIcon src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"} />
-            <DishIcon src={AppBaseUrl + "assets/icons/spicy-icon@2x.png"} />
+            <DishIcon src={appBaseUrl + "assets/icons/spicy-icon@2x.png"} />
+            <DishIcon src={appBaseUrl + "assets/icons/spicy-icon@2x.png"} />
           </DishIconsContainer>
           <DishPrice>{dish?.price}</DishPrice>
         </DishDetails>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AppBaseUrl } from "../api";
+import { appBaseUrl } from "../api";
 
 const Hero: React.FC = () => {
   return (
@@ -24,11 +24,11 @@ const HeroContainer = styled.div`
   display: flex;
   width: 100%;
   height: 269px;
-  background: url("${AppBaseUrl}assets/rest/home-page-mobile.png");
+  background: url("${appBaseUrl}assets/rest/home-page-mobile.png");
   background-size: cover;
   @media (min-width: 600px) {
     height: 700px;
-    background: url("${AppBaseUrl}assets/rest/home-page-desktop.png");
+    background: url("${appBaseUrl}assets/rest/home-page-desktop.png");
     background-size: cover;
   }
 `;
@@ -84,13 +84,13 @@ const SearchBar = styled.div`
 const SearchButton = styled.button`
   width: 18px;
   height: 18px;
-  background: url("${AppBaseUrl}assets/icons/search.svg");
+  background: url("${appBaseUrl}assets/icons/search.svg");
   background-size: 18px 18px;
   border: none;
   @media (min-width: 600px) {
     width: 33px;
     height: 33px;
-    background: url("${AppBaseUrl}assets/icons/search.svg");
+    background: url("${appBaseUrl}assets/icons/search.svg");
     background-size: 33px 33px;
   }
 `;
